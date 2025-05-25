@@ -6,4 +6,8 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\ZLManage.DomainModel\ZLManage.DomainModel.csproj" />
+    </ItemGroup>
+
 </Project>

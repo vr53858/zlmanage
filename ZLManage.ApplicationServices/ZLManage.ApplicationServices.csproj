@@ -7,10 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Mappers\" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\ZLManage.DomainModel\ZLManage.DomainModel.csproj" />
       <ProjectReference Include="..\ZLManage.DomainServices\ZLManage.DomainServices.csproj" />
     </ItemGroup>
