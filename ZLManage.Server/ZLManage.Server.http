@@ -1,0 +1,6 @@
+@ZLManage.Server_HostAddress = http://localhost:5233
+
+GET {{ZLManage.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
