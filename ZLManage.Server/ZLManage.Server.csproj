@@ -27,6 +27,7 @@
     </ProjectReference>
     <ProjectReference Include="..\ZLManage.DomainModel.Validation\ZLManage.DomainModel.Validation.csproj" />
     <ProjectReference Include="..\ZLManage.DomainModel\ZLManage.DomainModel.csproj" />
+    <ProjectReference Include="..\ZLManage.Infrastructure\ZLManage.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
