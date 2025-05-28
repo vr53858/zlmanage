@@ -31,8 +31,22 @@ builder.Services.AddScoped<IPistaRepository, PistaRepository>();
 builder.Services.AddScoped<IAdministratorRepository, AdministratorRepository>();
 builder.Services.AddScoped<IZaposlenikRepository, ZaposlenikRepository>();
 builder.Services.AddScoped<IZrakoplovRepository, ZrakoplovRepository>();
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.WithOrigins("http://localhost:5174") // Or your frontend URL
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+        policy.WithOrigins("http://localhost:5173") // For HTTPS
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
 
 var app = builder.Build();
+
+app.UseCors();
 
 app.UseDefaultFiles();
 app.UseStaticFiles();

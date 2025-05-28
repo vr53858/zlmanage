@@ -22,9 +22,15 @@
 
     <!-- Tablica -->
     <n-card title="Popis zrakoplova">
+      <n-input
+        v-model:value="searchQuery"
+        placeholder="Pretraži po modelu ili registraciji..."
+        clearable
+        class="mb-4"
+      />
       <n-data-table
         :columns="columns"
-        :data="zrakoplovi"
+        :data="filteredZrakoplovi"
         :pagination="{ pageSize: 5 }"
         :bordered="false"
       />
@@ -33,7 +39,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, h } from 'vue'
+import { ref, onMounted, computed, h } from 'vue'
+import axios from 'axios'
 import {
   NCard,
   NForm,
@@ -44,57 +51,82 @@ import {
   NH1
 } from 'naive-ui'
 
-const API = '/api/zrakoplovi'
+const API = 'http://localhost:5233/api/zrakoplov'
 
 const zrakoplovi = ref<any[]>([])
+const searchQuery = ref('')
 
 const form = ref({
-  id_zrakoplova: null,
+  idZrakoplova: null,
   model: '',
   registracija: ''
 })
 
 async function fetchAll() {
-  zrakoplovi.value = await fetch(API).then(res => res.json())
+  try {
+    const response = await axios.get(API)
+    zrakoplovi.value = response.data
+  } catch (error) {
+    console.error('Greška kod dohvaćanja zrakoplova:', error)
+  }
 }
+
+const filteredZrakoplovi = computed(() => {
+  if (!searchQuery.value) return zrakoplovi.value
+  const query = searchQuery.value.toLowerCase()
+  return zrakoplovi.value.filter(z =>
+    z.model.toLowerCase().includes(query) ||
+    z.registracija.toLowerCase().includes(query)
+  )
+})
 
 function resetForm() {
   form.value = {
-    id_zrakoplova: null,
+    idZrakoplova: null,
     model: '',
     registracija: ''
   }
 }
 
 function editZrakoplov(z: any) {
-  form.value = { ...z }
+  form.value = {
+    idZrakoplova: Number(z.idZrakoplova),  // ensure it's a number
+    model: z.model,
+    registracija: z.registracija
+  }
 }
 
 async function handleSubmit() {
-  const method = form.value.id_zrakoplova ? 'PUT' : 'POST'
-  const url = form.value.id_zrakoplova
-    ? `${API}/${form.value.id_zrakoplova}`
-    : API
+  const method = form.value.idZrakoplova ? 'put' : 'post'
+  const url = form.value.idZrakoplova ? `${API}/${form.value.idZrakoplova}` : API
 
-  await fetch(url, {
-    method,
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(form.value)
-  })
-
-  await fetchAll()
-  resetForm()
+  try {
+    await axios({
+      method,
+      url,
+      data: form.value,
+      headers: { 'Content-Type': 'application/json' }
+    })
+    await fetchAll()
+    resetForm()
+  } catch (error) {
+    console.error('Greška kod spremanja zrakoplova:', error)
+  }
 }
 
 async function deleteZrakoplov(id: number) {
-  await fetch(`${API}/${id}`, { method: 'DELETE' })
-  await fetchAll()
+  try {
+    await axios.delete(`${API}/${id}`)
+    await fetchAll()
+  } catch (error) {
+    console.error('Greška kod brisanja zrakoplova:', error)
+  }
 }
 
 const columns = [
   {
     title: 'ID',
-    key: 'id_zrakoplova'
+    key: 'idZrakoplova'
   },
   {
     title: 'Model',
@@ -106,10 +138,16 @@ const columns = [
   },
   {
     title: 'Akcije',
-    render: (row: any) => [
-      h(NButton, { size: 'small', onClick: () => editZrakoplov(row) }, { default: () => '✏️' }),
-      h(NButton, { size: 'small', type: 'error', onClick: () => deleteZrakoplov(row.id_zrakoplova) }, { default: () => '🗑️' })
-    ]
+    key: 'actions',
+    render: (row: any) =>
+      h('div', { class: 'flex gap-2' }, [
+        h(NButton, { size: 'small', onClick: () => editZrakoplov(row) }, { default: () => '✏️' }),
+        h(NButton, {
+          size: 'small',
+          type: 'error',
+          onClick: () => deleteZrakoplov(row.idZrakoplova)
+        }, { default: () => '🗑️' })
+      ])
   }
 ]
 
