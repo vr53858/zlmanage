@@ -7,6 +7,7 @@ namespace ZLManage.Infrastructure.Repositories;
 public class ZrakoplovRepository : IZrakoplovRepository
 {
     private readonly ZLContext _context;
+    
     public ZrakoplovRepository(ZLContext context) => _context = context;
 
     public async Task<List<Zrakoplov>> GetZrakoploviAsync()

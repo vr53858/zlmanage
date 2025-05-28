@@ -19,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{C6486DB6
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZLManage.ApplicationServices", "ZLManage.ApplicationServices\ZLManage.ApplicationServices.csproj", "{E2A65F00-BAE3-4267-9866-BF6ACA62AE88}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZLManage.UnitTests", "ZLManage.UnitTests\ZLManage.UnitTests.csproj", "{F14E6228-E27B-4FBC-9E50-8F8714671B18}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,11 +57,18 @@ Global
 		{E2A65F00-BAE3-4267-9866-BF6ACA62AE88}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E2A65F00-BAE3-4267-9866-BF6ACA62AE88}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E2A65F00-BAE3-4267-9866-BF6ACA62AE88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F14E6228-E27B-4FBC-9E50-8F8714671B18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F14E6228-E27B-4FBC-9E50-8F8714671B18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F14E6228-E27B-4FBC-9E50-8F8714671B18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F14E6228-E27B-4FBC-9E50-8F8714671B18}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C89D2AC5-3721-4957-AB24-91F436D38CFF}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F14E6228-E27B-4FBC-9E50-8F8714671B18} = {C6486DB6-2855-44DC-8549-2577FE3924FF}
 	EndGlobalSection
 EndGlobal
